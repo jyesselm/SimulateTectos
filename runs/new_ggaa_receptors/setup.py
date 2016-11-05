@@ -20,5 +20,5 @@ for m_path in ggaa_motifs:
             os.mkdir(run_dir+"/"+str(pos))
         full_path = os.path.abspath(run_dir+"/"+str(pos)+"/qsub.sh")
         cmd  = "python " + exec_path + " -csv " + csv + " -new_ggaa_model "
-        cmd += "-ggaa_model " + m_path
-        job = qsub_job.QSUBJob(full_path, cmd, walltime="12:00:00")
+        cmd += "-ggaa_model " + m_path + " -n 3"
+        job = qsub_job.QSUBJob(full_path, cmd, walltime="24:00:00")
