@@ -14,6 +14,8 @@ class SimulateTectosRun(object):
         self._options.add("n", 1)
         self._options.add('out_file', "results.csv")
         self._options.add('v', 0)
+        self._options.add('max', 100000)
+        self._options.add('output_freq', 10)
 
         self._output_columns = []
 
@@ -91,6 +93,13 @@ class SimulateTectosRun(object):
                 print new_row
             output_df.loc[pos] = new_row
             pos += 1
+
+            if self._options['max'] < pos:
+                break
+
+            if self._options['output_freq'] % pos == 0:
+                output_df.to_csv(self._options['out_file'], index=False)
+
 
         output_df.to_csv(self._options['out_file'], index=False)
 

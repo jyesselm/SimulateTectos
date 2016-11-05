@@ -13,6 +13,7 @@ def parse_args():
     parser.add_argument('-n', type=int, help='number of runs per construct')
     parser.add_argument('-v', action="store_true",
                         help='verbose print out')
+    parser.add_argument('-max', type=int, help='for testing max number of rows')
     args = parser.parse_args()
 
     f_extension = args.csv[-4:]
