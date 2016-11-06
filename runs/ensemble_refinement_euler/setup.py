@@ -43,3 +43,5 @@ for me_file in extra_me_files:
     cmd  = "python2.7 " + exec_path + " -csv " + csv_path + " -extra_me "
     cmd += full_me_file + " -n 3"
     job = qsub_job.QSUBJob(full_path, cmd, walltime="24:00:00")
+    job.submit()
+    pos += 1
