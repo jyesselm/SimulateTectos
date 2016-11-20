@@ -74,30 +74,65 @@ def build_2_state_extra_me_files():
         motif_state_ensemble_tree.build_me_sub(org_m, mems, "me_round_2/"+str(i)+".dat")
 
 
+def build_2_state_next_round():
+    org_m = rm.manager.get_motif(name="TWOWAY.1DUQ.7")
+    motifs = {}
+    f = open("all_motifs.str")
+    lines = f.readlines()
+    f.close()
+    for l in lines:
+        m = motif.str_to_motif(l)
+        motifs[m.name] = m
+        rm.manager.add_motif(motif=m)
+
+    round = 1
+    me_dir = "me_round_2_"+str(round)
+    if not os.path.isdir(me_dir):
+        os.mkdir(me_dir)
 
 
-build_2_state_extra_me_files()
+    df = pd.read_csv("next_round.csv")
+    for i, r in df.iterrows():
+        mem_names = r.members.split(',')
+        m1 = motifs[mem_names[0]]
+        m2 = motifs[mem_names[1]]
+        mems = [m1, m2]
+        motif_state_ensemble_tree.build_me_sub(org_m, mems, me_dir+"/"+str(i)+".dat")
+        if i > 10:
+            break
+
+
+
+#build_2_state_next_round()
+#build_extra_me_files()
 
 i = 0
-run_dir = "runs_2_state"
+run_dir = "runs_2_state_1"
 if not os.path.isdir(run_dir):
-    os.mkdir("runs_2_state")
+    os.mkdir("runs_2_state_1")
 
 csv_path  = os.path.abspath("TWOWAY.1DUQ.7.csv")
 exec_path = settings.LIB_PATH + "simulate_tectos/simulate_set.py"
 pos = 0
 
-extra_me_files = glob.glob("me_round_2/*")
+extra_me_files = glob.glob("me_round_2_1/*")
 
+cmd = ""
 for me_file in extra_me_files:
     if not os.path.isdir(run_dir+"/"+str(pos)):
         os.mkdir(run_dir+"/"+str(pos))
 
-    full_path = os.path.abspath(run_dir+"/"+str(pos)+"/qsub.sh")
-    full_me_file = os.path.abspath(me_file)
 
-    cmd  = "python2.7 " + exec_path + " -csv " + csv_path + " -extra_me "
-    cmd += full_me_file + " -n 3"
-    job = qsub_job.QSUBJob(full_path, cmd, walltime="24:00:00")
-    #job.submit()
+    full_me_file = os.path.abspath(me_file)
+    full_exec_path = os.path.abspath(run_dir+"/"+str(pos))
+
+    cmd += "cd " + full_exec_path + "\n"
+    cmd += "python2.7 " + exec_path + " -csv " + csv_path + " -extra_me "
+    cmd += full_me_file + " -n 3\n\n"
+    if pos % 5 == 0 and pos != 0:
+        full_path = os.path.abspath(run_dir+"/qsub."+str(pos)+".sh")
+        print full_path
+        job = qsub_job.QSUBJob(full_path, cmd, walltime="24:00:00")
+        #job.submit()
+        cmd = ""
     pos += 1

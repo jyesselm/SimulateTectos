@@ -7,6 +7,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-csv', help='dataframe in csv format')
     parser.add_argument('-s', type=int, help='steps in each simulation')
+    parser.add_argument('-out_file', help='the name of the output csv')
     parser.add_argument('-new_ggaa_model', action="store_true",
                         help='use different model for ggaa_contact')
     parser.add_argument('-ggaa_model', help='path to motif file for new model ')

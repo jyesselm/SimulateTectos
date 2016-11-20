@@ -80,7 +80,11 @@ class SimulateTectosRun(object):
                 if hits is not None:
                     runs += 1
                     avg_hit_count += hits
-            avg_hit_count /= runs
+
+            if runs != 0:
+                avg_hit_count /= runs
+            else:
+                avg_hit_count = -1
 
             new_row = []
             for col in self._output_columns[:-1]:
