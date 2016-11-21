@@ -16,6 +16,12 @@ def parse_args():
     parser.add_argument('-v', action="store_true",
                         help='verbose print out')
     parser.add_argument('-max', type=int, help='for testing max number of rows')
+
+    #simulation args, usually just for testing
+    parser.add_argument('-simulation.temperature', type=float)
+    parser.add_argument('-simulation.steric_radius', type=float)
+    parser.add_argument('-simulation.cutoff', type=float)
+
     args = parser.parse_args()
 
     f_extension = args.csv[-4:]
