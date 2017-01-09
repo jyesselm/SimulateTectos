@@ -12,6 +12,9 @@ def parse_args():
                         help='use different model for ggaa_contact')
     parser.add_argument('-ggaa_model', help='path to motif file for new model ')
     parser.add_argument('-extra_me', help='extra me file for swaping ensembles')
+    parser.add_argument('-extra_motifs', help='extra motif files')
+
+
     parser.add_argument('-n', type=int, help='number of runs per construct')
     parser.add_argument('-v', action="store_true",
                         help='verbose print out')

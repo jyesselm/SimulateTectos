@@ -101,7 +101,7 @@ class SimulateTectosRun(object):
             if self._options['max'] < pos:
                 break
 
-            print self._options['output_freq'], pos, self._options['output_freq'] % pos
+            #print self._options['output_freq'], pos, self._options['output_freq'] % pos
 
             if pos % self._options['output_freq'] == 0:
                 output_df.to_csv(self._options['out_file'], index=False)
