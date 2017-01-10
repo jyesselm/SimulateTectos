@@ -35,6 +35,16 @@ def generate_tar_ensemble():
         if m_aligned is None:
             continue
         m_aligned = motif_factory.factory.align_motif_to_common_frame(m_aligned, 0)
+
+        remove = []
+        for bp in m_aligned.basepairs:
+            if bp not in m_aligned.ends and bp.bp_type == "cW-W":
+                remove.append(bp)
+
+        for r in remove:
+            m_aligned.basepairs.remove(r)
+        motif_factory.factory._setup_secondary_structure(m_aligned)
+
         #m_aligned.to_pdb("m."+str(j)+".pdb")
         rm.manager.add_motif(motif=m_aligned)
         motifs.append(m_aligned)
@@ -59,14 +69,14 @@ mid_seq = "GGGAAC"
 mid_ss  = "(....)"
 
 tar_seqs = ["GAUCUGA","UCUC"]
-tar_ss   = ["(....((",")).)"]
+tar_ss   = ["(.....(",")..)"]
 
 possibles = [
     [["A", "U"], ["(", ")"]],
     [["U", "A"], ["(", ")"]],
     [["G", "C"], ["(", ")"]],
     [["C", "G"], ["(", ")"]],
-    [["GAUCUG","CUC"], ["(....(",").)"]]
+    [["GAUCUGA","UCUC"], ["(.....(",")..)"]]
 ]
 
 df = pd.DataFrame(columns="cseq css".split())
