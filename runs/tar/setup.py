@@ -17,7 +17,7 @@ def generate_tar_ensemble():
         if j == 130:
             continue
         m = motif_factory.factory.motif_from_file(pdb)
-        res_nums = [5, 6, 7, 8, 9, 10, 23, 24, 25]
+        res_nums = [5, 6, 7, 8, 9, 10, 11, 22, 23, 24, 25]
         res = [ m.get_residue(num=i) for i in res_nums]
         bps = []
         for bp in m.basepairs:
@@ -45,7 +45,9 @@ def generate_tar_ensemble():
     f.write(s)
     f.close()
 
-    #motif_state_ensemble_tree.build_me_sub(start_m, motifs, "tar.dat")
+    start_m.to_pdb("start_m.pdb")
+
+    motif_state_ensemble_tree.build_me_sub(start_m, motifs, "tar.dat")
 
 prime5_seq = "CUAGGAUAUGG"
 prime5_ss  = "(((((((..(("
@@ -56,8 +58,8 @@ prime3_ss  = "))...)))))))"
 mid_seq = "GGGAAC"
 mid_ss  = "(....)"
 
-tar_seqs = ["GAUCUG","CUC"]
-tar_ss   = ["(....(",").)"]
+tar_seqs = ["GAUCUGA","UCUC"]
+tar_ss   = ["(....((",")).)"]
 
 possibles = [
     [["A", "U"], ["(", ")"]],
