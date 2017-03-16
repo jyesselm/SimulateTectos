@@ -5,7 +5,7 @@ import simulate_tectos_run
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-csv', help='dataframe in csv format')
+    parser.add_argument('-csv', help='dataframe in csv format', required=True)
     parser.add_argument('-s', type=int, help='steps in each simulation')
     parser.add_argument('-out_file', help='the name of the output csv')
     parser.add_argument('-new_ggaa_model', action="store_true",
@@ -13,6 +13,7 @@ def parse_args():
     parser.add_argument('-ggaa_model', help='path to motif file for new model ')
     parser.add_argument('-extra_me', help='extra me file for swaping ensembles')
     parser.add_argument('-extra_motifs', help='extra motif files')
+    parser.add_argument('-print_command', action="store_true", help="see commands that are being excuted")
 
 
     parser.add_argument('-n', type=int, help='number of runs per construct')
@@ -43,13 +44,20 @@ except:
         "it is not a pandas dataframe formmated in csv format")
 
 run_dict = {}
+
 opts = vars(args)
 del opts['csv']
+
+st_run = simulate_tectos_run.SimulateTectosRun()
+
+if opts['print_command']:
+    st_run._stw._options['print_command'] = True
+    del opts['print_command']
 
 for name,val in opts.iteritems():
     if val is None:
         continue
     run_dict[name] = val
 
-st_run = simulate_tectos_run.SimulateTectosRun()
+
 st_run.run(df, **run_dict)
