@@ -52,7 +52,8 @@ st_run = simulate_tectos_run.SimulateTectosRun()
 
 if opts['print_command']:
     st_run._stw._options['print_command'] = True
-    del opts['print_command']
+
+del opts['print_command']
 
 for name,val in opts.iteritems():
     if val is None:

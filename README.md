@@ -8,7 +8,7 @@ tools for working with RNAMake's simulate_tectos tool for simulating the tecto R
 
 simulate_set.py
 ---------------
-accepts a whole set of constructs to run where each line in a csv file is a construct.
+accepts a whole set of constructs to run where each line in a csv file is a construct. Will output a csv file will all information in the supplied csv and a new row avg_hit_count that is the number of bound conformations of the tecto system.
 
 ```
 simulate_set.py -csv CSV 
@@ -56,11 +56,42 @@ For each row in the csv file a value MUST be defined, pd.nan is not a viable opt
 
 Values can be overrided at command line, if number of steps is specified at command line and is in the csv, the command line will override the csv value. command line options are options that you want to be included for all rows.
 
+ALL other rows that are not one of these above will be igored and copied over the the result .csv
+
 
 generate_pdbs_of_clusters.py
 ---------------
+given a csv file with the cluster information outputs the pdbs of each 
 
+```
+generate_pdbs_of_clusters.py -csv CSV 
+						    [-cluster_dir CLUSTER_DIR]
+```
 
+### examples: 
+
+```
+generate_pdbs_of_clusters.py -csv examples/1/pdb_junctions_subset.csv -cluster_dir examples/1/clusters
+```
+
+where pdb_junctions_subset.csv is:
+
+![cluster_info.csv](resources/imgs/cluster_info.png)
+
+required columns are described below if one of these is not included will return an error
+
+Column  | Description
+------------- | -------------
+pdb_id | the RNAMake motif id, if is null will assume is a wc helix instead of a motif
+side_1 | first strand of motif from 5' to 3'
+side_2 | second strand of motif form 5' to 3' 
+cluster | the cluster number
+flank1_5prime | the sequence before the 5' side_1 sequence 
+flank1_3prime | the sequence after the 3' side_1 sequence
+flank2_5prime | the sequence before the 5' side_2 sequence 
+flank2_3prime | the sequence after the 3' side_2 sequence
+side_1_all | the entire first strand of sequence from 5' to 3'
+side_2_all |  the entire second strand of sequence from 5' to 3'
 
 
 

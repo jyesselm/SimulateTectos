@@ -1,0 +1,1 @@
+python ../../simulate_tectos/bin/generate_pdbs_of_clusters.py -csv pdb_junctions_subset.csv -cluster_dir clusters

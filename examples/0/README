@@ -1,0 +1,2 @@
+python ../../simulate_tectos/simulate_set.py -csv test_set.csv -out_file test_set_results.csv
+
