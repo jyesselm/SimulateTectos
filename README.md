@@ -94,4 +94,27 @@ side_1_all | the entire first strand of sequence from 5' to 3'
 side_2_all |  the entire second strand of sequence from 5' to 3'
 
 
+generate_motif_ensemble.py
+--------------------------
+given a set of members of motifs to represent a ensemble of states generate a motif ensemble that can be supplied to simulate_tectos. This script generates both the ensemble and if supplied the sequences to use the ensemble for can create a csv that can be directly supplied to simulate_set.py
+
+```
+generate_motif_ensemble.py -csv CSV
+						   [-sequences SEQUENCES]
+                           [-me_outfile ME_OUTFILE]
+                           [-run_outfile RUN_OUTFILE]
+```
+
+### examples: 
+
+```
+generate_motif_ensemble.py -csv examples/2/cluster.csv -sequences examples/2/cluster_sequences.csv
+
+outputs:
+# of ensemble members: 23
+done!, run:
+python simulate_set.py -csv run.csv
+```
+
+
 

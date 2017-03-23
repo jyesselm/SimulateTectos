@@ -1,0 +1,11 @@
+python ../../simulate_tectos/bin/generate_motif_ensemble.py -csv cluster.csv -sequences cluster_sequences.csv
+
+Expected output:
+
+# of ensemble members: 23
+done!, run:
+python simulate_set.py -csv run.csv
+
+
+To run this set with the given ensemble members from this directly simply run:
+python ../../simulate_tectos/simulate_set.py -csv run.csv 
