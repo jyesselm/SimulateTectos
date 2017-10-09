@@ -3,7 +3,6 @@ from rnamake import base, option, vienna
 from rnamake.wrappers import simulate_tectos_wrapper, options
 
 
-
 class SimulateTectosRun(object):
     def __init__(self):
         self._stw = simulate_tectos_wrapper.SimulateTectosWrapper()

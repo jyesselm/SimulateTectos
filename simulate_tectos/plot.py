@@ -40,26 +40,33 @@ def _assign_topology_tags(df):
 
 
 def plot_dG_correlation_by_topology(df):
-    colors = ["#9F8CA6", "#67E568","#257F27","#08420D","#FFF000",
-              "#FFB62B","#E56124","#E53E30","#7F2353","#F911FF"]
+    #colors = ["#9F8CA6", "#67E568","#257F27","#08420D","#FFF000",
+    #          "#FFB62B","#E56124","#E53E30","#7F2353","#F911FF"]
+    colors = ["#e6194b", "#3cb44b", "#ffe119", "#0082c8", "#f58231", "#911eb4", "#46f0f0"]
     markers = ['o', 'v', 's', '^']
 
 
     df = _assign_topology_tags(df)
+    df['diff'] = df['dG_normalized'] - df['dG_predicted']
 
     fig = plt.figure(figsize=(8.5, 6))
     ax = plt.subplot(111)
     topologies = df.topology.unique()
 
-
     color_pos = 0
     mark_pos = 0
     for i, top in enumerate(topologies):
         df_sub = df[df.topology == top]
-        sns.regplot(x=df_sub.dG_normalized, y=df_sub.dG_predicted, fit_reg=False,
+        if top == "Flow 10 Chip 12":
+            continue
+
+        if top == "Flow 10 Chip 11":
+            print df_sub.to_csv("flow_10_chip_11.csv")
+
+        print top, df_sub['diff'].mean(), len(df_sub)
+        sns.regplot(x=df_sub.dG, y=df_sub.dG_predicted, fit_reg=False,
                     scatter_kws={"s": 75}, label=top, color=colors[color_pos],
                     marker=markers[mark_pos])
-
         color_pos += 1
         if color_pos >= len(colors):
             color_pos = 0
@@ -68,6 +75,12 @@ def plot_dG_correlation_by_topology(df):
     box = ax.get_position()
     ax.set_position([box.x0, box.y0, box.width * 0.7, box.height])
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+    x0, x1 = ax.get_xlim()
+    y0, y1 = ax.get_ylim()
+    print x0, x1, y0, y1
+    print [x0, y0], [x1, y1]
+    ax.plot([x0, x1], [y0, y1], 'k')
 
     return fig
 
