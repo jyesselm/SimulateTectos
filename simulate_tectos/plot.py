@@ -4,6 +4,8 @@ import numpy as np
 import subprocess
 import os
 
+import stats
+
 sns.set_style("white")
 sns.set_context("talk")
 
@@ -55,15 +57,19 @@ def plot_dG_correlation_by_topology(df):
 
     color_pos = 0
     mark_pos = 0
+    topologies = sorted(topologies)
     for i, top in enumerate(topologies):
         df_sub = df[df.topology == top]
         if top == "Flow 10 Chip 12":
             continue
 
-        if top == "Flow 10 Chip 11":
-            print df_sub.to_csv("flow_10_chip_11.csv")
+        cat_name = "_".join(top.split())
+        df_sub.to_csv(cat_name+".csv")
+        print cat_name
+        #if top == "Flow 10 Chip 11":
+        #    print df_sub.to_csv("flow_10_chip_11.csv")
 
-        print top, df_sub['diff'].mean(), len(df_sub)
+        print top, stats.get_avg_diff(df_sub.dG_predicted, df_sub.dG_normalized), len(df_sub)
         sns.regplot(x=df_sub.dG, y=df_sub.dG_predicted, fit_reg=False,
                     scatter_kws={"s": 75}, label=top, color=colors[color_pos],
                     marker=markers[mark_pos])
@@ -76,10 +82,12 @@ def plot_dG_correlation_by_topology(df):
     ax.set_position([box.x0, box.y0, box.width * 0.7, box.height])
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
+    ax.set_aspect('equal', 'datalim')
     x0, x1 = ax.get_xlim()
+    #ax.set_ylim(x0, x1)
     y0, y1 = ax.get_ylim()
-    print x0, x1, y0, y1
-    print [x0, y0], [x1, y1]
+    #print x0, x1, y0, y1
+    #print [x0, y0], [x1, y1]
     ax.plot([x0, x1], [y0, y1], 'k')
 
     return fig

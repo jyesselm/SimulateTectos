@@ -15,16 +15,15 @@ def parse_args():
     parser.add_argument('-extra_motifs', help='extra motif files')
     parser.add_argument('-print_command', action="store_true", help="see commands that are being excuted")
 
+    parser.add_argument("-scorer", help="select the scoring typpe")
+    parser.add_argument("-constraints", help="select contraints for SixD scorer")
+
 
     parser.add_argument('-n', type=int, help='number of runs per construct')
     parser.add_argument('-v', action="store_true",
                         help='verbose print out')
     parser.add_argument('-max', type=int, help='for testing max number of rows')
 
-    #simulation args, usually just for testing
-    parser.add_argument('-simulation.temperature', type=float)
-    parser.add_argument('-simulation.steric_radius', type=float)
-    parser.add_argument('-simulation.cutoff', type=float)
 
     args = parser.parse_args()
 
