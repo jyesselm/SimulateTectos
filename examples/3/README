@@ -1,0 +1,62 @@
+Example for generating an motif ensemble from a set of pdbs of the same motif with different conformations. All pdbs should be of the same motif and ONLY include the motif of interest. 
+
+Here we are working with a A-A mismatch with sequence CAG&CAG and structure (.(&).) 
+
+All pdbs for this motif are stored in pdbs/
+
+To generate the ensemble 
+
+DEFAULT GENERATION
+------------------
+
+python ../../simulate_tectos/bin/build_motif_ensemble_from_pdbs.py -pdb_dir pdbs
+
+which will generate a motif ensemble file "test.dat"
+
+This file can now be supplied to simulate_tectos_devel using the "-extra_me" commandline option 
+
+simulate_tectos_devel -cseq "CTAGGATATGGAACAGCCTCGGGAACGAGGCAGTTCCTAAGTCCTAG" -css "(((((((..(((((.((((((....)))))).)))))...)))))))" -extra_me test.dat 
+
+>>SIMULATE_TECTOS: registered extra motif ensembles from file: test.dat
+>>RESOURCE MANAGER: motif ensemble for TWOWAY.3NJ7.4-E3-F8 registered
+>>RESOURCE MANAGER: motif ensemble for TWOWAY.3NJ7.4-E5-F6 registered
+>>MOTIF STATE ENSEMBLE TREE: found supplied ensemble for name=TWOWAY.3NJ7.4 endname=E3-F8
+>>3928
+
+Note this motif has a specific name in this case "TWOWAY.3NJ7.4" do not worry about that. 
+
+You can see this motif is now incorporated in simulation by adding the "-start_pdbs" flag which will output the pdb of each starting member of each ensemble. 
+
+simulate_tectos_devel -cseq "CTAGGATATGGAACAGCCTCGGGAACGAGGCAGTTCCTAAGTCCTAG" -css "(((((((..(((((.((((((....)))))).)))))...)))))))" -extra_me test.dat -start_pdbs
+
+For this sequence it will be node.16.pdb
+
+Here is an example with TAR's bulge and its extra basepair 
+
+python ../../simulate_tectos/bin/build_motif_ensemble_from_pdbs.py -pdb_dir tar_pdbs
+
+simulate_tectos_devel -cseq "CTAGGATATGGAAGAUCUGACCTCGGGAACGAGGUCUCTTCCTAAGTCCTAG" -css "(((((((..(((((.....((((((....))))))..)))))...)))))))" -extra_me test.dat 
+
+
+SUPPLYING CUSTOM WEIGHTS
+------------------------
+
+Without supplying weights each of the conformations will be given equal weight of value 1. You can also supply custom values for each conformation using a supplied weights file. 
+
+such as example_weights.txt 
+cat example_weights.txt
+>>default_full_model_clustered.out.1.pdb 10
+>>default_full_model_clustered.out.2.pdb 1.5
+>>default_full_model_clustered.out.3.pdb 100
+>>default_full_model_clustered.out.4.pdb 15
+
+for each pdb file with a conformation you can give it your own weighting 
+
+python ../../simulate_tectos/bin/build_motif_ensemble_from_pdbs.py -pdb_dir pdbs -weights example_weights.txt 
+
+
+
+
+
+
+

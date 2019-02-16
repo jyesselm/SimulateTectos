@@ -45,7 +45,7 @@ def generate_tar_ensemble():
             m_aligned.basepairs.remove(r)
         motif_factory.factory._setup_secondary_structure(m_aligned)
 
-        #m_aligned.to_pdb("m."+str(j)+".pdb")
+        m_aligned.to_pdb("m."+str(j)+".pdb")
         rm.manager.add_motif(motif=m_aligned)
         motifs.append(m_aligned)
 
@@ -58,6 +58,9 @@ def generate_tar_ensemble():
     start_m.to_pdb("start_m.pdb")
 
     motif_state_ensemble_tree.build_me_sub(start_m, motifs, "tar.dat")
+
+generate_tar_ensemble()
+exit()
 
 prime5_seq = "CUAGGAUAUGG"
 prime5_ss  = "(((((((..(("

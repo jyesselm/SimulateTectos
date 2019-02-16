@@ -1,0 +1,4 @@
+default_full_model_clustered.out.1.pdb 10
+default_full_model_clustered.out.2.pdb 1.5
+default_full_model_clustered.out.3.pdb 100
+default_full_model_clustered.out.4.pdb 15
