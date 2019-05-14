@@ -18,6 +18,7 @@ def parse_args():
     parser.add_argument("-scorer", help="select the scoring typpe")
     parser.add_argument("-constraints", help="select contraints for SixD scorer")
     parser.add_argument('-temperature', type=float, help='temperature of simulation')
+    parser.add_argument('-cutoff', type=float, help='cutoff of simulation')
 
 
     parser.add_argument('-n', type=int, help='number of runs per construct')
