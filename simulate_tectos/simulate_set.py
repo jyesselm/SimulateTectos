@@ -19,12 +19,14 @@ def parse_args():
     parser.add_argument("-constraints", help="select contraints for SixD scorer")
     parser.add_argument('-temperature', type=float, help='temperature of simulation')
     parser.add_argument('-cutoff', type=float, help='cutoff of simulation')
-
+    parser.add_argument('-coorigin', action="store_true", help='changes orientation of buildup')
+    parser.add_argument('-randomized_start', action='store_true',
+                        help='randomizes the start state at beginning of simulation')
 
     parser.add_argument('-n', type=int, help='number of runs per construct')
     parser.add_argument('-v', action="store_true",
                         help='verbose print out')
-    parser.add_argument('-max', type=int, help='for testing max number of rows')
+    parser.add_argument('-max', type=int, help='for  testing max number of rows')
 
 
     args = parser.parse_args()

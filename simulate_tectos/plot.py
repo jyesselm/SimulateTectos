@@ -86,8 +86,6 @@ def plot_dG_correlation_by_topology(df):
     x0, x1 = ax.get_xlim()
     #ax.set_ylim(x0, x1)
     y0, y1 = ax.get_ylim()
-    #print x0, x1, y0, y1
-    #print [x0, y0], [x1, y1]
     ax.plot([x0, x1], [y0, y1], 'k')
 
     return fig
